@@ -1,46 +1,46 @@
-
-<header class="header">
+<header>
     <div class="container">
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-lg-2">
                 <div class="header__logo">
                     <a href="/">
-                        <span class="logo-text"><span class="logo-white">Vie</span><span class="logo-blue">Off</span></span>
+                        <span class="logo-text">
+                            <span class="logo-white">Vie</span><span class="logo-blue">Off</span>
+                        </span>
                     </a>
                 </div>
             </div>
             <div class="col-lg-8">
-                <div class="header__nav">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a href="/">Homepage</a></li>
-                            <li><a href="/categories">Categories <span class="arrow_carrot-down"></span></a>
-                                <ul class="dropdown">
-                                    <li><a href="/categories">Categories</a></li>
-                                    <li><a href="/anime_details">VieOff Details</a></li>
-                                    <li><a href="/anime_watching">VieOff Watching</a></li>
-                                    <li><a href="/blog_details">Blog Details</a></li>
-
-                                </ul>
-                            </li>
-                            <li><a href="/blog">Our Blog</a></li>
-                            <li><a href="#">Contacts</a></li>
-                            {{#if user}}
-                                <li><a href="/logout">Logout</a></li>
-                                <span style="font-size:20px;color: #0b0c2a">Chào,{{user.email}}</span>
-                            {{else}}
-                                <li><a href="/signup">Sign Up</a></li>
-                                <li><a href="/login">Login</a></li>
-                            {{/if}}
-                        </ul>
-                    </nav>
-                </div>
+                <nav class="header__menu mobile-menu">
+                    <ul class="d-flex justify-content-center gap-4">
+                        <li class="active"><a href="/">Homepage</a></li>
+                        <li class="dropdown">
+                            <a href="/categories">Categories <span class="arrow_carrot-down"></span></a>
+                            <ul class="dropdown">
+                                <li><a href="/categories">Categories</a></li>
+                                <li><a href="/anime_details">VieOff Details</a></li>
+                                <li><a href="/anime_watching">VieOff Watching</a></li>
+                                <li><a href="/blog_details">Blog Details</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="/blog">Our Blog</a></li>
+                        <li><a href="#">Contacts</a></li>
+                        {{#if user}}
+                            <li><a href="/logout" >Logout</a></li>
+                        {{else}}
+                            <li><a href="/signup" class="border border-1" >Sign Up</a></li>
+                            <li><a href="/login" class="border border-1" >Login</a></li>
+                        {{/if}}
+                    </ul>
+                </nav>
+                {{#if user}}
+                    <div class="user-greeting">
+                        Chào mừng, {{user.name}} đã đến với VIEOFF
+                    </div>
+                {{/if}}
             </div>
-            <div class="col-lg-2">
-                <div class="header__right">
-                    <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                    <a href="/login"><span class="icon_profile"></span></a>
-                </div>
+            <div class="col-lg-2 text-end">
+                <a href="#" class="search-switch"><span class="icon_search"></span></a>
             </div>
         </div>
         <div id="mobile-menu-wrap"></div>

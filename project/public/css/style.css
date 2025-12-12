@@ -36,7 +36,8 @@ body {
 	height: 100%;
 	font-family: "Mulish", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	background: #779ECB;
+	/*background: #779ECB;*/
+    background: black;
 }
 
 h1,
@@ -118,7 +119,7 @@ ol {
 
 .section-title h4,
 .section-title h5 {
-	color: #2F327A;
+	color: #ffffff;
 	font-weight: 600;
 	line-height: 21px;
 	text-transform: uppercase;
@@ -134,7 +135,7 @@ ol {
 	top: -6px;
 	height: 32px;
 	width: 4px;
-	background: #5284BD;
+	background: #ffffff;
 	content: "";
 }
 
@@ -328,18 +329,21 @@ ol {
 
 .header {
 	background: #779ECB;
+
 }
 
 .header__logo {
 	padding: 20px 0 17px;
+
 }
 
 .header__logo a {
 	display: inline-block;
 }
 
+
 .logo-text {
-	font-size: 32px;
+	font-size: 30px;
 	font-weight: 700;
 	font-family: "Oswald", sans-serif;
 	text-transform: uppercase;
@@ -352,7 +356,7 @@ ol {
 }
 
 .logo-blue {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .header__menu {
@@ -418,8 +422,8 @@ ol {
 }
 
 .header__menu ul li a {
-	font-size: 15px;
-	color: #2F327A;
+	font-size: 16px;
+	color: #ffffff;
 	display: block;
 	font-weight: 700;
 	-webkit-transition: all, 0.5s;
@@ -736,7 +740,7 @@ ol {
 }
 
 .product__sidebar .section-title h5 {
-	color: #2F327A;
+	color: #ffffff;
 	font-weight: 600;
 	font-family: "Oswald", sans-serif;
 	line-height: 21px;
@@ -751,7 +755,7 @@ ol {
 	top: -6px;
 	height: 32px;
 	width: 4px;
-	background: #5284BD;
+	background: #ffffff;
 	content: "";
 }
 
@@ -769,7 +773,7 @@ ol {
 .product__sidebar__view .filter__controls li {
 	list-style: none;
 	font-size: 13px;
-	color: #2F327A;
+	color: #ffffff;
 	display: inline-block;
 	margin-right: 7px;
 	cursor: pointer;
@@ -874,7 +878,7 @@ ol {
 .product__sidebar__comment__item__text span {
 	display: block;
 	font-size: 13px;
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .product__page__title {
@@ -902,7 +906,7 @@ ol {
 	float: none;
 	display: inline-block;
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	font-weight: 700;
 	border-radius: 0;
 	padding-left: 15px;
@@ -912,8 +916,8 @@ ol {
 }
 
 .product__page__title .product__page__filter .nice-select:after {
-	border-bottom: 2px solid #2F327A;
-	border-right: 2px solid #2F327A;
+	border-bottom: 2px solid #5284BD;
+	border-right: 2px solid #5284BD;
 	height: 8px;
 	top: 47%;
 	width: 8px;
@@ -932,7 +936,7 @@ ol {
 .product__pagination a {
 	display: inline-block;
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	font-weight: 600;
 	height: 50px;
 	width: 50px;
@@ -954,7 +958,7 @@ ol {
 }
 
 .product__pagination a i {
-	color: #2F327A;
+	color: #5284BD;
 	font-size: 15px;
 }
 
@@ -975,7 +979,7 @@ ol {
 }
 
 .anime__details__text p {
-	color: #2F327A;
+	color:#5284BD;
 	font-size: 18px;
 	line-height: 30px;
 }
@@ -989,7 +993,7 @@ ol {
 .anime__details__pic .comment {
 	font-size: 13px;
 	color: #ffffff;
-	background: #3D6A9F;
+	background: #090a0b;
 	display: inline-block;
 	padding: 2px 10px;
 	border-radius: 4px;
@@ -1001,7 +1005,7 @@ ol {
 .anime__details__pic .view {
 	font-size: 13px;
 	color: #ffffff;
-	background: #3D6A9F;
+	background: #5284BD;
 	display: inline-block;
 	padding: 2px 10px;
 	border-radius: 4px;
@@ -1022,7 +1026,7 @@ ol {
 
 .anime__details__title span {
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	display: block;
 }
 
@@ -1042,7 +1046,7 @@ ol {
 .anime__details__rating span {
 	display: block;
 	font-size: 18px;
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .anime__details__widget {
@@ -1073,7 +1077,7 @@ ol {
 }
 
 .anime__details__widget ul li span {
-	color: #2F327A;
+	color: #5284BD;
 	width: 115px;
 	display: inline-block;
 }
@@ -1160,12 +1164,12 @@ ol {
 }
 
 .anime__review__item__text h6 span {
-	color: #2F327A;
+	color: #ffffff;
 	font-weight: 400;
 }
 
 .anime__review__item__text p {
-	color: #2F327A;
+	color: #ffffff;
 	line-height: 23px;
 	margin-bottom: 0;
 }
@@ -1173,7 +1177,7 @@ ol {
 .anime__details__form form textarea {
 	width: 100%;
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	padding-left: 20px;
 	padding-top: 12px;
 	height: 110px;
@@ -1301,7 +1305,7 @@ ol {
 }
 
 .anime__details__episodes a:hover {
-	color: #2F327A;
+	color: #5284BD;
 	background: #ffffff;
 }
 
@@ -1336,7 +1340,7 @@ ol {
 
 .breadcrumb__links span {
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	display: inline-block;
 }
 
@@ -1451,7 +1455,7 @@ ol {
 }
 
 .blog__details__title h6 span {
-	color: #2F327A;
+	color: #5284BD;
 	font-weight: 400;
 	text-transform: none;
 }
@@ -1543,7 +1547,7 @@ ol {
 
 .blog__details__tags a {
 	display: inline-block;
-	color: #2F327A;
+	color: #5284BD;
 	font-size: 12px;
 	font-weight: 700;
 	letter-spacing: 2px;
@@ -1582,7 +1586,7 @@ ol {
 
 .blog__details__btns__item h5 a span {
 	font-size: 30px;
-	color: #2F327A;
+	color: #5284BD;
 	position: relative;
 	top: 8px;
 }
@@ -1618,7 +1622,7 @@ ol {
 
 .blog__details__comment__item__text span {
 	font-size: 14px;
-	color: #2F327A;
+	color: #5284BD;
 	display: block;
 	margin-bottom: 10px;
 }
@@ -1630,7 +1634,7 @@ ol {
 }
 
 .blog__details__comment__item__text p {
-	color: #2F327A;
+	color: #5284BD;
 	font-size: 14px;
 	line-height: 22px;
 	margin-bottom: 25px;
@@ -1668,7 +1672,7 @@ ol {
 	width: 100%;
 	background: #ffffff;
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	padding-left: 20px;
 	border-radius: 2px;
 	border: none;
@@ -1676,23 +1680,23 @@ ol {
 }
 
 .blog__details__form form input::-webkit-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form input::-moz-placeholder {
-	color: #2F327A;
+	color:#5284BD;
 }
 
 .blog__details__form form input:-ms-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form input::-ms-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form input::placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form textarea {
@@ -1710,23 +1714,23 @@ ol {
 }
 
 .blog__details__form form textarea::-webkit-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form textarea::-moz-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .blog__details__form form textarea:-ms-input-placeholder {
-	color: #2F327A;
+	color:#5284BD;
 }
 
 .blog__details__form form textarea::-ms-input-placeholder {
-	color: #2F327A;
+	color:#5284BD;
 }
 
 .blog__details__form form textarea::placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 /*---------------------
@@ -1739,8 +1743,14 @@ ol {
 }
 
 .login__form {
-	position: relative;
-	padding-left: 145px;
+
+	/*position: relative;*/
+	/*padding-left: 145px;*/
+    /*border: none;*/
+    background: rgb(11, 47, 73); /* Slightly transparent white */
+    padding: 30px; /* Increase padding for a better layout */
+    border-radius: 10px; /* Softly rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .login__form:after {
@@ -1749,7 +1759,7 @@ ol {
 	top: -40px;
 	height: 330px;
 	width: 1px;
-	background: rgba(255, 255, 255, 0.2);
+	/*background: rgba(255, 255, 255, 0.2);*/
 	content: "";
 }
 
@@ -1780,34 +1790,34 @@ ol {
 	height: 50px;
 	width: 100%;
 	font-size: 15px;
-	color: #2F327A;
+	color: #5284BD;
 	background: #ffffff;
 	border: none;
 	padding-left: 76px;
 }
 
 .login__form form .input__item input::-webkit-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .login__form form .input__item input::-moz-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .login__form form .input__item input:-ms-input-placeholder {
-	color: #2F327A;
+	color:#5284BD;
 }
 
 .login__form form .input__item input::-ms-input-placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .login__form form .input__item input::placeholder {
-	color: #2F327A;
+	color: #5284BD;
 }
 
 .login__form form .input__item span {
-	color: #2F327A;
+	color:#5284BD;
 	font-size: 20px;
 	position: absolute;
 	left: 15px;
@@ -1902,6 +1912,11 @@ ol {
 	left: 32px;
 	top: 14px;
 }
+/*---------------------
+  Khung Sign Up, Log in, Log out
+-----------------------*/
+
+
 
 /*---------------------
   Sign Up
@@ -1949,7 +1964,7 @@ ol {
 -----------------------*/
 
 .footer {
-	background: #779ECB;
+	background: black;
 	padding-top: 60px;
 	padding-bottom: 40px;
 	position: relative;
@@ -1997,13 +2012,13 @@ ol {
 
 .footer__nav ul li a {
 	font-size: 15px;
-	color: #2F327A;
+	color:#5284BD;
 	display: block;
 	font-weight: 700;
 }
 
 .footer__copyright__text {
-	color: #2F327A;
+	color: #5284BD;
 	margin-bottom: 0;
 	text-align: right;
 }
@@ -2011,6 +2026,18 @@ ol {
 .footer__copyright__text a {
 	color: #5284BD;
 }
+.user-greeting {
+    font-size: 18px;               /* chữ to hơn một chút */
+    font-weight: 600;              /* in đậm vừa phải */
+    font-family: "Oswald", sans-serif; /* font khác để nổi bật */
+    color: #ffffff;                /* xanh navy đồng bộ với logo */
+    text-align: center;            /* căn giữa */
+    margin-top: 6px;
+    letter-spacing: 1px;           /* giãn chữ nhẹ */
+    text-transform: uppercase;     /* viết hoa toàn bộ */
+}
+
+
 
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
@@ -2086,28 +2113,28 @@ ol {
 	.slicknav_nav a {
 		padding: 7px 0;
 		margin: 0;
-		color: #2F327A;
+		color: #5284BD;
 		font-weight: 600;
 	}
 	.slicknav_btn {
 		border-radius: 0;
-		background-color: #3D6A9F;
+		background-color: #5284BD;
 		position: absolute;
 		right: 0;
 		top: 9px;
 	}
 	.slicknav_nav .slicknav_arrow {
-		color: #2F327A;
+		color: #5284BD;
 	}
 	.slicknav_nav .slicknav_row:hover {
 		border-radius: 0;
 		background: transparent;
-		color: #2F327A;
+		color: #5284BD;
 	}
 	.slicknav_nav a:hover {
 		border-radius: 0;
 		background: transparent;
-		color: #2F327A;
+		color: #5284BD;
 	}
 	.product__sidebar {
 		padding-top: 50px;
@@ -2191,7 +2218,7 @@ ol {
 	.slicknav_nav a {
 		padding: 7px 0;
 		margin: 0;
-		color: #2F327A;
+		color: #5284BD;
 		font-weight: 600;
 	}
 	.slicknav_btn {
@@ -2202,12 +2229,12 @@ ol {
 		top: 9px;
 	}
 	.slicknav_nav .slicknav_arrow {
-		color: #2F327A;
+		color: #5284BD;
 	}
 	.slicknav_nav .slicknav_row:hover {
 		border-radius: 0;
 		background: transparent;
-		color: #2F327A;
+		color: #5284BD;
 	}
 	.slicknav_nav a:hover {
 		border-radius: 0;
