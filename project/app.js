@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const methodOverride = require('method-override')
 const {engine} = require('express-handlebars');
 const session = require('express-session');
 const flash = require('connect-flash');
@@ -17,11 +18,14 @@ app.engine(
         layoutsDir: path.join(__dirname, 'views', 'layouts'),
     })
 );
+
 app.use(session({
     secret: 'secret',
     resave: true,
     saveUninitialized: true,
 }));
+app.use(methodOverride('_method'));
+
 app.use(flash());
 //PASSPORT
 app.use(passport.initialize());
@@ -40,6 +44,7 @@ app.use((req, res, next) => {
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/users');
+var categoryRouter = require('./routes/categories');
 
 console.log(path.join(__dirname, 'views', 'layouts'));
 //view engine setup
@@ -61,6 +66,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/users', userRouter);
+app.use('/admin/category', categoryRouter);
 
 //database mongoDB
 const mongoose = require('mongoose');

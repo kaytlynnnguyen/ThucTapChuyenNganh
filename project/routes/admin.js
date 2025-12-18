@@ -9,7 +9,7 @@ function useAuthenticated(req, res, next) {
     }
 }
 
-router.all('/*', useAuthenticated, (req, res, next) => {
+router.all('/*', (req, res, next) => {
     res.locals.layout = 'admin';
     next();
 });
@@ -20,14 +20,14 @@ router.get('/', (req, res) => {
 });
 
 // Quản lý Anime
-router.get('/product', (req, res) => {
-    res.render('admin/product/product_list', { title: 'Quản lý Anime' });
-});
-
-// Quản lý thể loại
-router.get('/category', (req, res) => {
-    res.render('admin/category/category-list', { title: 'Quản lý thể loại' });
-});
+// router.get('/product', (req, res) => {
+//     res.render('admin/product/product_list', { title: 'Quản lý Anime' });
+// });
+//
+// // Quản lý thể loại
+// router.get('/category', (req, res) => {
+//     res.render('admin/category/category-list', { title: 'Quản lý thể loại' });
+// });
 
 // Quản lý người dùng
 router.get('/users', (req, res) => {
