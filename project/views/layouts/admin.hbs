@@ -30,13 +30,6 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
 
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bảng điều khiển">
-                <a class="nav-link" href="/admin">
-                    <i class="fa fa-fw fa-dashboard"></i>
-                    <span class="nav-link-text">Bảng điều khiển</span>
-                </a>
-            </li>
-
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Quản lý">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseQuanLy"
                    data-parent="#exampleAccordion">
@@ -45,45 +38,22 @@
                 </a>
                 <ul class="sidenav-second-level collapse" id="collapseQuanLy">
                     <li>
+                        <a href="/admin/movies">
+                            <i class="fa fa-fw fa-film"></i> Quản lý phim
+                        </a>
+                    </li>
+                    <li>
                         <a href="/admin/category">
                             <i class="fa fa-fw fa-folder-open"></i> Quản lý thể loại
                         </a>
                     </li>
-                    <li>
-                        <a href="/admin/product">
-                            <i class="fa fa-fw fa-film"></i> Quản lý Anime
-                        </a>
-                    </li>
                 </ul>
-            </li>
-
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Bài viết Blog">
-                <a class="nav-link" href="/admin/blogwrite">
-                    <i class="fa fa-fw fa-newspaper-o"></i>
-                    <span class="nav-link-text">Bài viết Blog</span>
-                </a>
             </li>
 
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Người dùng">
                 <a class="nav-link" href="/admin/users">
                     <i class="fa fa-fw fa-users"></i>
                     <span class="nav-link-text">Quản lý người dùng</span>
-                </a>
-            </li>
-
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Test">
-                <a class="nav-link" href="/admin/test">
-                    <i class="fa fa-fw fa-users"></i>
-                    <span class="nav-link-text">Test</span>
-                </a>
-            </li>
-        </ul>
-
-
-        <ul class="navbar-nav sidenav-toggler">
-            <li class="nav-item">
-                <a class="nav-link text-center" id="sidenavToggler">
-                    <i class="fa fa-fw fa-angle-left"></i>
                 </a>
             </li>
         </ul>
@@ -112,78 +82,6 @@
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        <!-- Breadcrumbs -->
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="/admin">Trang quản trị</a>
-            </li>
-            <li class="breadcrumb-item active">Bảng điều khiển</li>
-        </ol>
-
-
-        <div class="row">
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-primary o-hidden h-100">
-                    <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-film"></i>
-                        </div>
-                        <div class="mr-5">12 Anime mới!</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="/admin/product">
-                        <span class="float-left">Xem chi tiết</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-success o-hidden h-100">
-                    <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-folder-open"></i>
-                        </div>
-                        <div class="mr-5">5 thể loại mới!</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="/admin/category">
-                        <span class="float-left">Xem chi tiết</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-warning o-hidden h-100">
-                    <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-newspaper-o"></i>
-                        </div>
-                        <div class="mr-5">8 bài viết mới!</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="/admin/blogwrite">
-                        <span class="float-left">Xem chi tiết</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-sm-6 mb-3">
-                <div class="card text-white bg-danger o-hidden h-100">
-                    <div class="card-body">
-                        <div class="card-body-icon">
-                            <i class="fa fa-fw fa-users"></i>
-                        </div>
-                        <div class="mr-5">3 người dùng mới!</div>
-                    </div>
-                    <a class="card-footer text-white clearfix small z-1" href="/admin/users">
-                        <span class="float-left">Xem chi tiết</span>
-                        <span class="float-right"><i class="fa fa-angle-right"></i></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content placeholder -->
         {{{body}}}
     </div>
 </div>

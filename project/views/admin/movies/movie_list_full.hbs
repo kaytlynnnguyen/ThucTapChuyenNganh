@@ -1,0 +1,195 @@
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Quản lý phim
+            <small>Danh sách tất cả phim</small>
+        </h1>
+    </div>
+</div>
+
+<!-- Add Movie Button -->
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <a href="/admin/movies/create" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Thêm phim mới
+        </a>
+    </div>
+</div>
+
+<!-- Search Form -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <form method="GET" action="/admin/movies" class="form-inline">
+            <div class="form-group mr-3">
+                <input type="text" name="search" class="form-control" placeholder="Tìm kiếm phim..." value="{{search}}" style="width: 300px;">
+            </div>
+            <button type="submit" class="btn btn-primary mr-2">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+            <a href="/admin/movies" class="btn btn-secondary">
+                <i class="fa fa-refresh"></i> Xóa bộ lọc
+            </a>
+        </form>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="row mb-3">
+    <div class="col-lg-12">
+        <div class="alert alert-info">
+            <strong>Thống kê:</strong> Tổng cộng {{totalMovies}} phim
+            {{#if search}} - Tìm kiếm: "{{search}}"{{/if}}
+        </div>
+    </div>
+</div>
+
+<!-- Movies Table -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-film"></i> Danh sách phim
+            </div>
+            <div class="card-body">
+                {{#if movies}}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Poster</th>
+                                <th>Tiêu đề</th>
+                                <th>Thể loại</th>
+                                <th>Năm</th>
+                                <th>Đánh giá</th>
+                                <th>Trailer</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each movies}}
+                            <tr>
+                                <td>{{stt}}</td>
+                                <td>
+                                    {{#if poster}}
+                                    <img src="{{poster}}" alt="{{title}}" class="img-thumbnail" style="width: 60px; height: 90px; object-fit: cover;">
+                                    {{else}}
+                                    <div style="width: 60px; height: 90px; background: #ddd; display: flex; align-items: center; justify-content: center; font-size: 10px;" class="img-thumbnail">
+                                        No Image
+                                    </div>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <strong>{{title}}</strong>
+                                    {{#if overview}}
+                                    <br><small class="text-muted">{{#if (gt overview.length 80)}}{{substring overview 0 80}}...{{else}}{{overview}}{{/if}}</small>
+                                    {{/if}}
+                                </td>
+                                <td>{{genres}}</td>
+                                <td>{{releaseDate}}</td>
+                                <td>
+                                    {{#if rating}}
+                                    <span class="badge badge-success">{{rating}}/10</span>
+                                    {{else}}
+                                    <span class="badge badge-secondary">N/A</span>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    {{#if trailerId}}
+                                    <span class="badge badge-success">Có</span>
+                                    {{else}}
+                                    <span class="badge badge-warning">Không</span>
+                                    {{/if}}
+                                </td>
+                                <td>
+                                    <a href="/admin/movies/edit/{{_id}}" class="btn btn-sm btn-warning">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form action="/admin/movies/{{_id}}?_method=DELETE" method="post" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa phim này?')">
+                                        <button type="submit" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                {{#if (gt totalPages 1)}}
+                <nav aria-label="Page navigation" class="mt-4">
+                    <ul class="pagination justify-content-center">
+                        {{#if (gt currentPage 1)}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page={{math currentPage '-' 1}}{{#if search}}&search={{search}}{{/if}}">« Trước</a>
+                        </li>
+                        {{/if}}
+                        
+                        {{#if (gt currentPage 2)}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page=1{{#if search}}&search={{search}}{{/if}}">1</a>
+                        </li>
+                        {{#if (gt currentPage 3)}}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {{/if}}
+                        {{/if}}
+                        
+                        {{#if (gt currentPage 1)}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page={{math currentPage '-' 1}}{{#if search}}&search={{search}}{{/if}}">{{math currentPage '-' 1}}</a>
+                        </li>
+                        {{/if}}
+                        
+                        <li class="page-item active">
+                            <span class="page-link">{{currentPage}}</span>
+                        </li>
+                        
+                        {{#if (lt currentPage totalPages)}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page={{math currentPage '+' 1}}{{#if search}}&search={{search}}{{/if}}">{{math currentPage '+' 1}}</a>
+                        </li>
+                        {{/if}}
+                        
+                        {{#if (lt currentPage (math totalPages '-' 1))}}
+                        {{#if (lt currentPage (math totalPages '-' 2))}}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {{/if}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page={{totalPages}}{{#if search}}&search={{search}}{{/if}}">{{totalPages}}</a>
+                        </li>
+                        {{/if}}
+                        
+                        {{#if (lt currentPage totalPages)}}
+                        <li class="page-item">
+                            <a class="page-link" href="/admin/movies?page={{math currentPage '+' 1}}{{#if search}}&search={{search}}{{/if}}">Sau »</a>
+                        </li>
+                        {{/if}}
+                    </ul>
+                </nav>
+                
+                <div class="text-center mt-2">
+                    <small class="text-muted">
+                        Trang {{currentPage}} / {{totalPages}} - Hiển thị {{movies.length}} / {{totalMovies}} phim
+                    </small>
+                </div>
+                {{/if}}
+
+                {{else}}
+                <div class="alert alert-warning">
+                    {{#if error}}
+                    {{error}}
+                    {{else}}
+                    Không tìm thấy phim nào.
+                    {{/if}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

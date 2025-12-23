@@ -27,15 +27,23 @@ router.get('/create', function (req, res) {
     res.render('admin/category/create');
 });
 router.post('/create', function(req, res) {
+    console.log('Request body:', req.body); // Debug log
+    
+    // Validation - kiểm tra an toàn hơn
+    if (!req.body || !req.body.name || typeof req.body.name !== 'string' || req.body.name.trim() === '') {
+        return res.status(400).send('Tên thể loại không được để trống');
+    }
+
     const newCategory = new Category({
-        name: req.body.name,
-        image: req.body.image.trim(),
-        status: req.body.status === 'true'
+        name: req.body.name.trim(),
     });
 
     newCategory.save()
         .then(() => res.redirect('/admin/category'))
-        .catch(err => res.send(err));
+        .catch(err => {
+            console.error('Error creating category:', err);
+            res.status(500).send('Lỗi khi tạo thể loại: ' + err.message);
+        });
 });
 
 
@@ -47,14 +55,30 @@ router.get('/edit/:id', function(req, res) {
     })
 });
 router.put('/edit/:id', function(req, res) {
+    console.log('Request body:', req.body); // Debug log
+    
+    // Validation - kiểm tra an toàn hơn
+    if (!req.body || !req.body.name || typeof req.body.name !== 'string' || req.body.name.trim() === '') {
+        return res.status(400).send('Tên thể loại không được để trống');
+    }
+
     Category.findOne({_id: req.params.id}).then((category) => {
-        category.name = req.body.name;
-        category.image = req.body.image.trim();
-        category.status = req.body.status === 'true';
-        category.save().then ( savecategory => {
+        if (!category) {
+            return res.status(404).send('Không tìm thấy thể loại');
+        }
+
+        category.name = req.body.name.trim();
+        
+        category.save().then(() => {
             res.redirect('/admin/category');
-        })
-    })
+        }).catch(err => {
+            console.error('Error updating category:', err);
+            res.status(500).send('Lỗi khi cập nhật thể loại: ' + err.message);
+        });
+    }).catch(err => {
+        console.error('Error finding category:', err);
+        res.status(500).send('Lỗi khi tìm thể loại: ' + err.message);
+    });
 });
 router.delete('/:id', async (req, res) => {
     try {

@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 const User = require('../models/User');
 const bcryptjs=require('bcryptjs')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const movieController = require('../controllers/movieController');
 
 router.all('/*', (req, res, next) => {
     res.locals.layout = 'home'; // layout mặc định cho admin
@@ -11,8 +13,46 @@ router.all('/*', (req, res, next) => {
 });
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('partials/home/index', { title: 'Express' });
+router.get('/', async function(req, res, next) {
+    try {
+        const Movie = require('../models/Movie');
+        
+        // Lấy phim trending (có rating cao)
+        const trendingMovies = await Movie.find({ 
+            rating: { $gte: 7 } 
+        }).sort({ rating: -1 }).limit(6).lean();
+        
+        // Lấy phim popular (có poster)
+        const popularMovies = await Movie.find({ 
+            poster: { $ne: null, $ne: '' } 
+        }).sort({ releaseDate: -1 }).limit(6).lean();
+        
+        // Lấy phim recent (mới nhất)
+        const recentMovies = await Movie.find({})
+            .sort({ releaseDate: -1 }).limit(6).lean();
+        
+        // Lấy phim live (có trailer)
+        const liveMovies = await Movie.find({ 
+            trailerId: { $ne: null, $ne: '' } 
+        }).limit(6).lean();
+        
+        res.render('partials/home/index', { 
+            title: 'Movie Hub',
+            trendingMovies: trendingMovies,
+            popularMovies: popularMovies,
+            recentMovies: recentMovies,
+            liveMovies: liveMovies
+        });
+    } catch (error) {
+        console.error('Error loading home page:', error);
+        res.render('partials/home/index', { 
+            title: 'Movie Hub',
+            trendingMovies: [],
+            popularMovies: [],
+            recentMovies: [],
+            liveMovies: []
+        });
+    }
 });
 router.get('/blog_details', function(req, res, next) {
     res.render('blog/blog_details');
@@ -133,6 +173,43 @@ router.get('/customer', function(req, res, next) {
 });
 router.get('/test', function(req, res, next) {
     res.render('blog/test');
+});
+
+// Route test movies đơn giản
+router.get('/test-movies', async function(req, res, next) {
+    try {
+        const Movie = require('../models/Movie');
+        const movies = await Movie.find({ 
+            poster: { $ne: null, $ne: '' } 
+        }).limit(5).lean();
+        
+        console.log('Found movies:', movies.length);
+        
+        // Trả về HTML đơn giản
+        let html = `
+        <html>
+        <head><title>Test Movies</title></head>
+        <body>
+            <h1>Test Movies (${movies.length} found)</h1>
+        `;
+        
+        movies.forEach((movie, index) => {
+            html += `
+            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                <h3>${movie.title}</h3>
+                <p>Poster: ${movie.poster || 'None'}</p>
+                <p>ImgId: ${movie.imgId || 'None'}</p>
+                ${movie.poster ? `<img src="${movie.poster}" style="max-width: 200px;" onerror="this.style.border='2px solid red'">` : ''}
+            </div>
+            `;
+        });
+        
+        html += '</body></html>';
+        res.send(html);
+    } catch (error) {
+        console.error('Error:', error);
+        res.send('Error: ' + error.message);
+    }
 });
 
 module.exports = router;

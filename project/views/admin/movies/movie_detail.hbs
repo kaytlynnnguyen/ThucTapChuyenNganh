@@ -1,0 +1,224 @@
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Chi tiết phim
+            <small>{{movie.title}}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Trang quản trị</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/admin/movies">Quản lý phim</a>
+            </li>
+            <li class="breadcrumb-item active">{{movie.title}}</li>
+        </ol>
+    </div>
+</div>
+
+<!-- Movie Details -->
+<div class="row">
+    <div class="col-lg-4">
+        <!-- Movie Poster -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-image"></i> Poster phim
+            </div>
+            <div class="card-body text-center">
+                {{#if movie.poster}}
+                <img src="https://image.tmdb.org/t/p/w500{{movie.poster}}" alt="{{movie.title}}" class="img-fluid" style="max-height: 400px;">
+                {{else}}
+                <div style="height: 400px; background: #ddd; display: flex; align-items: center; justify-content: center;">
+                    <span class="text-muted">Không có poster</span>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fa fa-cogs"></i> Hành động nhanh
+            </div>
+            <div class="card-body">
+                <a href="/movies/{{movie._id}}" target="_blank" class="btn btn-primary btn-block">
+                    <i class="fa fa-external-link"></i> Xem trước trang phim
+                </a>
+                {{#if movie.trailerId}}
+                <a href="/movies/{{movie._id}}/watch" target="_blank" class="btn btn-success btn-block">
+                    <i class="fa fa-play"></i> Xem trailer
+                </a>
+                {{/if}}
+                <a href="/admin/movies" class="btn btn-secondary btn-block">
+                    <i class="fa fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-8">
+        <!-- Basic Information -->
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-info-circle"></i> Thông tin cơ bản
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 200px; text-color: White">Tiêu đề:</th>
+                        <td><strong>{{movie.title}}</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Thể loại:</th>
+                        <td>{{#if movie.genres}}{{movie.genres}}{{else}}<span class="text-muted">Chưa có</span>{{/if}}</td>
+                    </tr>
+                    <tr>
+                        <th>Năm phát hành:</th>
+                        <td>{{#if movie.releaseDate}}{{movie.releaseDate}}{{else}}<span class="text-muted">Chưa có</span>{{/if}}</td>
+                    </tr>
+                    <tr>
+                        <th>Đánh giá:</th>
+                        <td>
+                            {{#if movie.rating}}
+                            <span class="badge badge-success">{{movie.rating}}/10</span>
+                            {{else}}
+                            <span class="text-muted">Chưa có đánh giá</span>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>IMDB ID:</th>
+                        <td>
+                            {{#if movie.imdbId}}
+                            <code>{{movie.imdbId}}</code>
+                            <a href="https://www.imdb.com/title/{{movie.imdbId}}" target="_blank" class="btn btn-sm btn-outline-primary ml-2">
+                                <i class="fa fa-external-link"></i> Xem trên IMDB
+                            </a>
+                            {{else}}
+                            <span class="text-muted">Chưa có</span>
+                            {{/if}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Movie Description -->
+        {{#if movie.overview}}
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fa fa-file-text"></i> Mô tả phim
+            </div>
+            <div class="card-body">
+                <p>{{movie.overview}}</p>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Trailer Management -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fa fa-play"></i> Quản lý trailer
+            </div>
+            <div class="card-body">
+                <form id="trailerForm">
+                    <div class="form-group">
+                        <label for="trailerId">YouTube Video ID:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="trailerId" name="trailerId" 
+                                   value="{{movie.trailerId}}" placeholder="Ví dụ: dQw4w9WgXcQ">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-save"></i> Cập nhật
+                                </button>
+                            </div>
+                        </div>
+                        <small class="form-text text-muted">
+                            Nhập ID video YouTube (phần sau dấu "v=" trong URL)
+                        </small>
+                    </div>
+                </form>
+                
+                {{#if movie.trailerId}}
+                <div class="mt-3">
+                    <h6>Preview trailer hiện tại:</h6>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" 
+                                src="https://www.youtube.com/embed/{{movie.trailerId}}" 
+                                allowfullscreen></iframe>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Technical Information -->
+        <div class="card mt-3">
+            <div class="card-header">
+                <i class="fa fa-database"></i> Thông tin kỹ thuật
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>ID trong database:</th>
+                        <td><code>{{movie._id}}</code></td>
+                    </tr>
+                    <tr>
+                        <th>Có poster:</th>
+                        <td>
+                            {{#if movie.poster}}
+                            <span class="badge badge-success">Có</span>
+                            {{else}}
+                            <span class="badge badge-danger">Không</span>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Có trailer:</th>
+                        <td>
+                            {{#if movie.trailerId}}
+                            <span class="badge badge-success">Có</span>
+                            {{else}}
+                            <span class="badge badge-warning">Không</span>
+                            {{/if}}
+                        </td>
+                    </tr>
+                    {{#if movie.imgId}}
+                    <tr>
+                        <th>Image ID:</th>
+                        <td><code>{{movie.imgId}}</code></td>
+                    </tr>
+                    {{/if}}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#trailerForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const trailerId = $('#trailerId').val().trim();
+        
+        $.ajax({
+            url: '/admin/movies/{{movie._id}}/trailer',
+            method: 'POST',
+            data: { trailerId: trailerId },
+            success: function(response) {
+                if (response.success) {
+                    alert('Cập nhật trailer thành công!');
+                    location.reload();
+                } else {
+                    alert('Lỗi: ' + response.message);
+                }
+            },
+            error: function() {
+                alert('Có lỗi xảy ra khi cập nhật trailer');
+            }
+        });
+    });
+});
+</script>

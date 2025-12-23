@@ -1,0 +1,71 @@
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="/"><i class="fa fa-home"></i> Home</a>
+                    <a href="/movies">Danh sách phim</a>
+                    <a href="/movies/{{movie._id}}">{{movie.title}}</a>
+                    <span>Xem Trailer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="anime__video__player">
+                    {{#if trailerId}}
+                    <div class="embed-responsive embed-responsive-16by9" style="height: 600px; position: relative; padding-bottom: 56.25%;">
+                        <iframe 
+                            class="embed-responsive-item" 
+                            src="https://www.youtube.com/embed/{{trailerId}}?autoplay=1&rel=0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;">
+                        </iframe>
+                    </div>
+                    {{else}}
+                    <div class="alert alert-warning">
+                        <h4>Không tìm thấy trailer</h4>
+                        <p>Xin lỗi, chúng tôi không thể tìm thấy trailer cho bộ phim này. Vui lòng thử lại sau.</p>
+                        <a href="/movies/{{movie._id}}" class="btn btn-primary">Quay lại trang chi tiết</a>
+                    </div>
+                    {{/if}}
+                </div>
+                
+                <div class="anime__details__text mt-4">
+                    <h3 style="color: white;">{{movie.title}}</h3>
+                    {{#if movie.releaseDate}}
+                    <p><strong>Ngày phát hành:</strong> {{movie.releaseDate}}</p>
+                    {{/if}}
+                    {{#if movie.genres}}
+                    <p><strong>Thể loại:</strong> {{movie.genres}}</p>
+                    {{/if}}
+                    {{#if movie.rating}}
+                    <p><strong>Đánh giá:</strong> {{movie.rating}} / 10</p>
+                    {{/if}}
+                    {{#if movie.overview}}
+                    <p><strong>Mô tả:</strong> {{movie.overview}}</p>
+                    {{/if}}
+                    <div class="mt-3">
+                        <a href="/movies/{{movie._id}}" class="btn btn-primary">
+                            <i class="fa fa-arrow-left"></i> Quay lại trang chi tiết
+                        </a>
+                        <a href="/movies" class="btn btn-secondary">
+                            <i class="fa fa-list"></i> Danh sách phim
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->
+

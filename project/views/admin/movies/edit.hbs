@@ -1,0 +1,113 @@
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Sửa phim
+            <small>{{movie.title}}</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="/admin">Trang quản trị</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a href="/admin/movies">Quản lý phim</a>
+            </li>
+            <li class="breadcrumb-item active">Sửa phim</li>
+        </ol>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="card-body">
+        <div class="col-md-8 mx-auto">
+            <div class="card shadow-lg rounded-4">
+                <div class="card-header bg-warning text-white text-center">
+                    <h4><i class="fa fa-edit"></i> Sửa phim: {{movie.title}}</h4>
+                </div>
+
+                <div class="card-body border-0">
+                    <form action="/admin/movies/edit/{{movie._id}}?_method=PUT" method="POST">
+
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Tiêu đề phim *</label>
+                            <input name="title" type="text" class="form-control" id="title" value="{{movie.title}}" required>
+                        </div>
+
+                        <!-- Overview -->
+                        <div class="mb-3">
+                            <label for="overview" class="form-label">Mô tả phim</label>
+                            <textarea name="overview" class="form-control" id="overview" rows="4" placeholder="Mô tả nội dung phim...">{{movie.overview}}</textarea>
+                        </div>
+
+                        <!-- Release Date -->
+                        <div class="mb-3">
+                            <label for="releaseDate" class="form-label">Ngày phát hành</label>
+                            <input name="releaseDate" type="text" class="form-control" id="releaseDate" value="{{movie.releaseDate}}" placeholder="VD: 15/6/2023">
+                        </div>
+
+                        <!-- Genres -->
+                        <div class="mb-3">
+                            <label for="genres" class="form-label">Thể loại</label>
+                            <input name="genres" type="text" class="form-control" id="genres" value="{{movie.genres}}" placeholder="VD: Action|Adventure|Science Fiction">
+                            <small class="form-text text-muted">Phân cách các thể loại bằng dấu |</small>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Đánh giá (0-10)</label>
+                            <input name="rating" type="number" class="form-control" id="rating" value="{{movie.rating}}" min="0" max="10" step="0.1" placeholder="VD: 7.5">
+                        </div>
+
+                        <!-- Poster URL -->
+                        <div class="mb-3">
+                            <label for="poster" class="form-label">URL Poster</label>
+                            <input name="poster" type="url" class="form-control" id="poster" value="{{movie.poster}}" placeholder="https://image.tmdb.org/t/p/w500/...">
+                            <small class="form-text text-muted">URL đầy đủ của poster phim</small>
+                        </div>
+
+                        <!-- Trailer ID -->
+                        <div class="mb-3">
+                            <label for="trailerId" class="form-label">YouTube Trailer ID</label>
+                            <input name="trailerId" type="text" class="form-control" id="trailerId" value="{{movie.trailerId}}" placeholder="VD: dQw4w9WgXcQ">
+                            <small class="form-text text-muted">ID video YouTube (phần sau dấu "v=" trong URL)</small>
+                        </div>
+
+                        <!-- IMDB ID -->
+                        <div class="mb-3">
+                            <label for="imdbId" class="form-label">IMDB ID</label>
+                            <input name="imdbId" type="text" class="form-control" id="imdbId" value="{{movie.imdbId}}" placeholder="VD: tt0369610">
+                            <small class="form-text text-muted">ID phim trên IMDB (bắt đầu bằng tt)</small>
+                        </div>
+
+                        <!-- Current Poster Preview -->
+                        {{#if movie.poster}}
+                        <div class="mb-3">
+                            <label class="form-label">Poster hiện tại:</label>
+                            <div>
+                                <img src="{{movie.poster}}" alt="{{movie.title}}" class="img-thumbnail" style="max-width: 200px;">
+                            </div>
+                        </div>
+                        {{/if}}
+
+                        <!-- Buttons -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                <i class="fa fa-save"></i> Cập nhật phim
+                            </button>
+                            <a href="/admin/movies" class="btn btn-secondary btn-lg ml-2">
+                                <i class="fa fa-arrow-left"></i> Quay lại
+                            </a>
+                            <a href="/movies/{{movie._id}}" target="_blank" class="btn btn-info btn-lg ml-2">
+                                <i class="fa fa-external-link"></i> Xem trước
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

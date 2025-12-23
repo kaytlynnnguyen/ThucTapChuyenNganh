@@ -8,11 +8,13 @@ const CatergorySchema = new Schema({
     },
     image:{
         type: String,
-        required: true,
+        required: false,
+        default: ''
     },
     status:{
         type: Boolean,
         required: false,
+        default: true
     }
 });
 module.exports = mongoose.model('catergories', CatergorySchema);

@@ -14,17 +14,8 @@
                 <nav class="header__menu mobile-menu">
                     <ul class="d-flex justify-content-center gap-4">
                         <li class="active"><a href="/">Homepage</a></li>
-                        <li class="dropdown">
-                            <a href="/categories">Categories <span class="arrow_carrot-down"></span></a>
-                            <ul class="dropdown">
-                                <li><a href="/categories">Categories</a></li>
-                                <li><a href="/anime_details">VieOff Details</a></li>
-                                <li><a href="/anime_watching">VieOff Watching</a></li>
-                                <li><a href="/blog_details">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="/blog">Our Blog</a></li>
-                        <li><a href="#">Contacts</a></li>
+                        <li><a href="/blog_details">Blog Details</a></li>
+                        <li><a href="/movies">Phim</a></li>
                         {{#if user}}
                             <li><a href="/logout" >Logout</a></li>
                         {{else}}
@@ -38,9 +29,6 @@
                         Chào mừng, {{user.name}} đã đến với VIEOFF
                     </div>
                 {{/if}}
-            </div>
-            <div class="col-lg-2 text-end">
-                <a href="#" class="search-switch"><span class="icon_search"></span></a>
             </div>
         </div>
         <div id="mobile-menu-wrap"></div>
