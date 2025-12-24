@@ -7,6 +7,7 @@ const TMDB_API_KEY = 'c05481df7e07f877fc270caf7e48f9c0'; // ← thay bằng key 
 var express = require('express');
 var router = express.Router();
 const Movie = require('../models/Movie');
+const Comment = require('../models/Comment');
 const youtubeService = require('../services/youtubeService');
 
 // Middleware kiểm tra đăng nhập
@@ -94,34 +95,7 @@ router.get('/', async function(req, res, next) {
             .sort({ releaseDate: -1, title: 1 })
             .skip(skip)
             .limit(limit)
-            .lean(); // Dùng lean() để convert thành plain object
-            
-        // Tạm thời tắt fetch poster để trang load nhanh hơn
-        // for (let movie of movies) {
-        //     console.log('🎬 Movie:', movie.title, movie.imdbId);
-        
-        //     if (!movie.poster && movie.imdbId) {
-        //         try {
-        //             const posterPath = await getPosterFromTMDB(movie.imdbId);
-        //             console.log('🖼 posterPath:', posterPath);
-        
-        //             const localPoster = await cachePoster(posterPath);
-        //             console.log('💾 localPoster:', localPoster);
-        
-        //             if (localPoster) {
-        //                 await Movie.updateOne(
-        //                     { _id: movie._id },
-        //                     { poster: localPoster }
-        //                 );
-        //                 movie.poster = localPoster;
-        //             }
-        //         } catch (err) {
-        //             console.log('❌ Lỗi lấy poster:', err.message);
-        //         }
-        //     }
-        // }
-            
-            
+            .lean(); 
 
         // Convert _id thành string cho mỗi phim
         const moviesWithStringId = movies.map(movie => ({
@@ -155,6 +129,7 @@ router.get('/', async function(req, res, next) {
             .sort();
 
         res.render('blog/movies', {
+            layout: 'movies', // Sử dụng layout riêng
             title: 'Danh sách phim',
             movies: moviesWithStringId,
             currentPage: page,
@@ -173,7 +148,53 @@ router.get('/', async function(req, res, next) {
     }
 });
 
-// Chi tiết phim - Yêu cầu đăng nhập
+// Thêm comment - Yêu cầu đăng nhập (PHẢI ĐẶT TRƯỚC /:id)
+router.post('/:id/comment', requireLogin, async function(req, res, next) {
+    try {
+        const mongoose = require('mongoose');
+        if (!req.params.id || !mongoose.Types.ObjectId.isValid(req.params.id)) {
+            req.flash('error_message', 'ID phim không hợp lệ');
+            return res.redirect('/movies');
+        }
+
+        const movie = await Movie.findById(req.params.id);
+        if (!movie) {
+            req.flash('error_message', 'Phim không tồn tại');
+            return res.redirect('/movies');
+        }
+
+        // Kiểm tra user đã comment cho phim này chưa
+        const existingComment = await Comment.findOne({
+            user: req.user._id,
+            movie: req.params.id
+        });
+
+        if (existingComment) {
+            req.flash('error_message', 'Bạn đã đánh giá phim này rồi');
+            return res.redirect(`/movies/${req.params.id}`);
+        }
+
+        // Tạo comment mới
+        const newComment = new Comment({
+            content: req.body.content.trim(),
+            rating: parseInt(req.body.rating),
+            user: req.user._id,
+            movie: req.params.id,
+            status: 'pending' // Chờ duyệt
+        });
+
+        await newComment.save();
+        req.flash('success_message', 'Đánh giá của bạn đã được gửi và đang chờ duyệt');
+        res.redirect(`/movies/${req.params.id}`);
+
+    } catch (error) {
+        console.error('Lỗi khi thêm comment:', error);
+        req.flash('error_message', 'Có lỗi xảy ra khi gửi đánh giá');
+        res.redirect(`/movies/${req.params.id}`);
+    }
+});
+
+// Chi tiết phim - Yêu cầu đăng nhập - comment
 router.get('/:id', requireLogin, async function(req, res, next) {
     try {
         // Kiểm tra ID có hợp lệ không (dùng mongoose validation)
@@ -193,6 +214,15 @@ router.get('/:id', requireLogin, async function(req, res, next) {
                 message: 'Phim không tồn tại'
             });
         }
+
+        // Lấy comments đã được duyệt
+        const comments = await Comment.find({ 
+            movie: req.params.id, 
+            status: 'approved' 
+        })
+        .populate('user', 'name')
+        .sort({ createdAt: -1 })
+        .lean();
 
         // Lấy phim liên quan (nếu có genres)
         let relatedMovies = [];
@@ -219,6 +249,7 @@ router.get('/:id', requireLogin, async function(req, res, next) {
         res.render('blog/movie_details', {
             title: movie.title || 'Chi tiết phim',
             movie: movieObj,
+            comments: comments,
             relatedMovies: relatedMovies
         });
     } catch (error) {

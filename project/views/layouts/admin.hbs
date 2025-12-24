@@ -47,6 +47,11 @@
                             <i class="fa fa-fw fa-folder-open"></i> Quản lý thể loại
                         </a>
                     </li>
+                    <li>
+                        <a href="/admin/comments">
+                            <i class="fa fa-fw fa-comments"></i> Quản lý đánh giá
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -82,6 +87,27 @@
 
 <div class="content-wrapper">
     <div class="container-fluid">
+        <!-- Flash messages (from req.flash) -->
+        {{#if success_message}}
+            {{#each success_message}}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{{this}}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {{/each}}
+        {{/if}}
+        {{#if error_message}}
+            {{#each error_message}}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{{this}}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {{/each}}
+        {{/if}}
         {{{body}}}
     </div>
 </div>
@@ -101,14 +127,27 @@
 <!-- Core plugin JavaScript-->
 <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 <!-- Page level plugin JavaScript-->
-<script src="/vendor/chart.js/Chart.min.js"></script>
 <script src="/vendor/datatables/jquery.dataTables.js"></script>
 <script src="/vendor/datatables/dataTables.bootstrap4.js"></script>
 <!-- Custom scripts for all pages-->
 <script src="/js/sb-admin.min.js"></script>
 <!-- Custom scripts for this page-->
 <script src="/js/sb-admin-datatables.min.js"></script>
-<script src="/js/sb-admin-charts.min.js"></script>
+
+<!-- Auto hide alerts after 5 seconds -->
+<script>
+$(document).ready(function() {
+    // Auto hide success alerts after 5 seconds
+    setTimeout(function() {
+        $('.alert-success').fadeOut('slow');
+    }, 5000);
+    
+    // Auto hide error alerts after 8 seconds
+    setTimeout(function() {
+        $('.alert-danger').fadeOut('slow');
+    }, 8000);
+});
+</script>
 
 </body>
 </html>

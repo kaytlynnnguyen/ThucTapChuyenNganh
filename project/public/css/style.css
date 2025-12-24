@@ -31,12 +31,13 @@
 /* Template default CSS
 /*----------------------------------------*/
 
-html,
+ html, body {
+    height: 100%;
+} 
+
 body {
-	height: 100%;
 	font-family: "Mulish", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	/*background: #779ECB;*/
     background: black;
 }
 
@@ -146,8 +147,8 @@ ol {
 }
 
 .spad {
-	padding-top: 100px;
-	padding-bottom: 100px;
+	padding-top: 50px;
+	padding-bottom: 50px;
 }
 
 .text-white h1,
@@ -462,13 +463,246 @@ ol {
   Hero
 -----------------------*/
 
+/* .hero {
+	padding-top: 50px;
+}
+
+/*.hero__items {*/
+/*	padding: 250px 0 42px 50px;*/
+/*	border-radius: 5px;*/
+/*}*/
+
+/* .hero__items {
+	/* Cố định chiều cao tối thiểu để layout không bị nhảy (thu nhỏ một chút) */
+	/* min-height: 600px;
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	padding-top: 80px; */
+
+	/* Padding để đẩy nội dung vào trong (chỉnh lại cho cân đối) */
+	/* padding-left: 50px;
+	padding-bottom: 42px;
+
+    border-radius: 5px;
+	overflow: hidden;
+
+	/* Đảm bảo ảnh nền luôn đẹp */
+    /* background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}  */
+
+/* Dark gradient overlay on hero images for better contrast like design */
+/* .hero__items::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(90deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0) 100%);
+	z-index: 2;
+	border-radius: 5px;
+} */
+
+/* .hero__text {
+	position: relative;
+	z-index: 9;
+	max-width: 720px; */
+	/* Đẩy toàn bộ nội dung chữ xuống dưới mà không thay đổi kích thước banner */
+	/* padding-top: 160px;
+} */
+
+/* .hero__text .label {
+	font-size: 13px;
+	color: #5284BD;
+	background: #ffffff;
+	padding: 6px 16px 4px;
+	display: inline-block;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	border-radius: 4px;
+	-webkit-transition: all, 0.2s;
+	-o-transition: all, 0.2s;
+	transition: all, 0.2s;
+} */
+
+/* .hero__text h2 {
+	color: #ffffff;
+	font-size: 48px;
+	font-family: "Oswald", sans-serif;
+	font-weight: 700;
+	line-height: 56px;
+	margin-top: 35px;
+	margin-bottom: 8px;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.4s;
+	-o-transition: all, 0.4s;
+	transition: all, 0.4s;
+}
+
+.hero__text p {
+	color: #ffffff;
+	font-size: 16px;
+	margin-bottom: 24px;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.6s;
+	-o-transition: all, 0.6s;
+	transition: all, 0.6s;
+}
+
+.hero__text a {
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.8s;
+	-o-transition: all, 0.8s;
+	transition: all, 0.8s;
+}
+
+.hero__text a span {
+	font-size: 14px;
+	color: #ffffff;
+	background: #2F7BC1;
+	display: inline-block;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	padding: 10px 18px;
+	border-radius: 4px 0 0 4px;
+	margin-right: 1px;
+}
+
+.hero__text a i {
+	font-size: 20px;
+	display: inline-block;
+	background: #5284BD;
+	padding: 11px 5px 16px 8px;
+	color: #ffffff;
+	border-radius: 0 4px 4px 0;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text .label {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text h2 {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text p {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text a {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-dots {
+	position: absolute;
+	left: 0;
+	bottom: 22px;
+	width: 100%;
+	text-align: center;
+}
+
+.hero__slider.owl-carousel .owl-dots button {
+	height: 10px;
+	width: 32px;
+	background: rgba(119,158,203,0.5);
+	border-radius: 20px;
+	margin-right: 8px;
+}
+
+.hero__slider.owl-carousel .owl-dots button.active {
+	background: #ffffff;
+	width: 36px;
+}
+
+.hero__slider.owl-carousel .owl-dots button:last-child {
+	margin-right: 0;
+}
+
+.hero__slider.owl-carousel .owl-nav button {
+	font-size: 36px;
+	height: 66px;
+	width: 66px;
+	background: rgba(75,140,200,0.9);
+	line-height: 66px;
+	text-align: center;
+	color: #ffffff;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	position: relative;
+	z-index: 3;
+	position: absolute;
+	left: -44px;
+	top: 50%;
+	margin-top: -47px;
+	border-radius: 8px;
+}
+
+.hero__slider.owl-carousel .owl-nav button.owl-next {
+	left: auto;
+	right: -44px;
+}
+.rating{
+	color: white;
+}
+.hero__slider.owl-carousel .owl-nav button:after {
+	position: absolute;
+	top: 6px;
+	left: 0;
+	right: 0;
+	height: 54px;
+	width: 54px;
+	background: rgba(255, 255, 255, 0.1);
+	content: "";
+	z-index: -1;
+	margin: 0 auto;
+}  */
+
+/* .hero__slider.owl-carousel .owl-nav button span {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	display: block;
+	z-index: 1;
+}  */
 .hero {
 	padding-top: 50px;
 }
 
 .hero__items {
-	padding: 250px 0 42px 50px;
+	/* Cố định chiều cao để tất cả slide có chiều cao đều nhau */
+	min-height: 600px;
+	height: 600px;
+	
+	/* Căn giữa nội dung theo chiều dọc */
+	display: flex;
+	align-items: center;
+	
+	/* Padding để đẩy nội dung vào trong */
+	padding-left: 50px;
+	padding-bottom: 42px;
+	
 	border-radius: 5px;
+	
+	/* Đảm bảo ảnh nền luôn đẹp và đều nhau */
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
 }
 
 .hero__text {
@@ -675,8 +909,10 @@ ol {
 .product__item__pic {
 	height: 325px;
 	position: relative;
-	border-radius: 5px;
+	border-radius: 5px; 
+	overflow: hidden;
 }
+
 
 .product__item__pic .ep {
 	font-size: 13px;
@@ -2324,7 +2560,16 @@ ol {
 		display: none;
 	}
 	.hero__items {
-		padding: 250px 0 42px 15px;
+		/* Giữ chiều cao đều nhau trên mobile */
+		min-height: 500px;
+		height: 500px;
+		display: flex;
+		align-items: center;
+		padding-left: 15px;
+		padding-bottom: 42px;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center center;
 	}
 	.hero__text h2 {
 		font-size: 32px;
@@ -2383,4 +2628,45 @@ ol {
 	.anime__review__item__text {
 		padding: 18px 20px 20px;
 	}
+}
+
+
+
+
+
+
+
+
+
+
+/* CSS bổ sung để hero slider đẹp hơn */
+.hero__text {
+    width: 100%;
+    max-width: 600px;
+}
+
+.hero__text h2 {
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.hero__text p {
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+/* Đảm bảo tất cả slide có chiều cao đều nhau */
+.hero__slider .owl-item {
+    height: 600px;
+}
+
+@media only screen and (max-width: 479px) {
+    .hero__slider .owl-item {
+        height: 500px;
+    }
+    
+    .hero__text h2 {
+        font-size: 28px;
+        line-height: 1.3;
+    }
 }

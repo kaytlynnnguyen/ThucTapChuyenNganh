@@ -1,0 +1,181 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="fa fa-comments"></i> Quản lý đánh giá
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <!-- Statistics -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-info text-white">
+                                <div class="card-body text-center">
+                                    <h3>{{stats.total}}</h3>
+                                    <p>Tổng đánh giá</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-warning text-white">
+                                <div class="card-body text-center">
+                                    <h3>{{stats.pending}}</h3>
+                                    <p>Chờ duyệt</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-success text-white">
+                                <div class="card-body text-center">
+                                    <h3>{{stats.approved}}</h3>
+                                    <p>Đã duyệt</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body text-center">
+                                    <h3>{{stats.rejected}}</h3>
+                                    <p>Đã từ chối</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filter -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <form method="GET" action="/admin/comments" class="d-flex">
+                                <select name="status" class="form-control mr-2">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option value="pending" {{#if (eq status 'pending')}}selected{{/if}}>Chờ duyệt</option>
+                                    <option value="approved" {{#if (eq status 'approved')}}selected{{/if}}>Đã duyệt</option>
+                                    <option value="rejected" {{#if (eq status 'rejected')}}selected{{/if}}>Đã từ chối</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary">Lọc</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Comments Table -->
+                    {{#if comments}}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Người dùng</th>
+                                    <th>Phim</th>
+                                    <th>Đánh giá</th>
+                                    <th>Nội dung</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each comments}}
+                                <tr>
+                                    <td>
+                                        <strong>{{user.name}}</strong><br>
+                                        <small class="text-muted">{{user.email}}</small>
+                                    </td>
+                                    <td>
+                                        <a href="/movies/{{movie._id}}" target="_blank">{{movie.title}}</a>
+                                    </td>
+                                    <td>
+                                        <div class="text-warning">
+                                            {{#times rating}}⭐{{/times}}
+                                        </div>
+                                        <small>({{rating}}/5)</small>
+                                    </td>
+                                    <td>
+                                        <div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;">
+                                            {{content}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{#if (eq status 'pending')}}
+                                        <span class="badge badge-warning">Chờ duyệt</span>
+                                        {{else if (eq status 'approved')}}
+                                        <span class="badge badge-success">Đã duyệt</span>
+                                        {{else if (eq status 'rejected')}}
+                                        <span class="badge badge-danger">Đã từ chối</span>
+                                        {{/if}}
+                                    </td>
+                                    <td>{{formatDate createdAt}}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            {{#if (eq status 'pending')}}
+                                            <form method="POST" action="/admin/comments/{{_id}}/approve" style="display: inline;">
+                                                <button type="submit" class="btn btn-sm btn-success" title="Duyệt">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <form method="POST" action="/admin/comments/{{_id}}/reject" style="display: inline;">
+                                                <button type="submit" class="btn btn-sm btn-warning" title="Từ chối">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </form>
+                                            {{/if}}
+                                            <form method="POST" action="/admin/comments/{{_id}}?_method=DELETE" style="display: inline;" onsubmit="return confirm('Bạn có chắc muốn xóa đánh giá này?')">
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Xóa">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {{#if (gt totalPages 1)}}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {{#if (gt currentPage 1)}}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/comments?page={{math currentPage '-' 1}}{{#if status}}&status={{status}}{{/if}}">Trước</a>
+                            </li>
+                            {{/if}}
+                            
+                            {{#if (gt currentPage 1)}}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/comments?page={{math currentPage '-' 1}}{{#if status}}&status={{status}}{{/if}}">{{math currentPage '-' 1}}</a>
+                            </li>
+                            {{/if}}
+                            
+                            <li class="page-item active">
+                                <span class="page-link">{{currentPage}}</span>
+                            </li>
+                            
+                            {{#if (lt currentPage totalPages)}}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/comments?page={{math currentPage '+' 1}}{{#if status}}&status={{status}}{{/if}}">{{math currentPage '+' 1}}</a>
+                            </li>
+                            {{/if}}
+                            
+                            {{#if (lt currentPage totalPages)}}
+                            <li class="page-item">
+                                <a class="page-link" href="/admin/comments?page={{math currentPage '+' 1}}{{#if status}}&status={{status}}{{/if}}">Sau</a>
+                            </li>
+                            {{/if}}
+                        </ul>
+                    </nav>
+                    {{/if}}
+
+                    {{else}}
+                    <div class="text-center py-4">
+                        <i class="fa fa-comments fa-3x text-muted mb-3"></i>
+                        <h5>Chưa có đánh giá nào</h5>
+                        <p class="text-muted">Các đánh giá từ người dùng sẽ hiển thị ở đây</p>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

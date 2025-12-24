@@ -1,4 +1,18 @@
 
+<!-- THÔNG BÁO ALERT MẠNH -->
+{{#if success_message}}
+<div style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: #28a745; color: white; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 300px;">
+    ✅ {{success_message}}
+    <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+</div>
+{{/if}}
+{{#if error_message}}
+<div style="position: fixed; top: 20px; right: 20px; z-index: 9999; background: #dc3545; color: white; padding: 15px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); min-width: 300px;">
+    ❌ {{error_message}}
+    <button onclick="this.parentElement.remove()" style="float: right; background: none; border: none; color: white; font-size: 18px; cursor: pointer; margin-left: 10px;">&times;</button>
+</div>
+{{/if}}
+
 <a href="/admin/category/create" class="btn btn-primary">
     Thêm Thể Loại
 </a>
@@ -34,3 +48,64 @@
     </tbody>
 
 </table>
+<!-- THÔNG BÁO ALERT BẰNG JAVASCRIPT -->
+<script>
+// Hàm hiển thị thông báo
+function showAlert(message, type = 'success') {
+    const alertDiv = document.createElement('div');
+    const bgColor = type === 'success' ? '#28a745' : '#dc3545';
+    const icon = type === 'success' ? '✅' : '❌';
+    
+    alertDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        background: ${bgColor};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        min-width: 300px;
+        max-width: 500px;
+        font-size: 14px;
+        font-family: Arial, sans-serif;
+    `;
+    
+    alertDiv.innerHTML = `
+        ${icon} ${message}
+        <button onclick="this.parentElement.remove()" style="
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            margin-left: 10px;
+        ">&times;</button>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    // Tự động ẩn sau 5 giây
+    setTimeout(() => {
+        if (alertDiv.parentElement) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+// Kiểm tra URL để hiển thị thông báo phù hợp
+window.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const success = urlParams.get('success');
+    const error = urlParams.get('error');
+    
+    if (success) {
+        showAlert(decodeURIComponent(success), 'success');
+    }
+    if (error) {
+        showAlert(decodeURIComponent(error), 'error');
+    }
+});
+</script>

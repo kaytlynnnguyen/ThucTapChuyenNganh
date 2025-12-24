@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="VieOff Template">
+    <meta name="keywords" content="VieOff, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+    <title>{{title}}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <!-- CSS riêng cho trang movies -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .header {
+            flex-shrink: 0;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+        
+        .footer {
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+        
+        /* Giảm padding để tránh khoảng trống */
+        .blog.spad {
+            padding-top: 40px !important;
+            padding-bottom: 40px !important;
+        }
+        
+        .breadcrumb-option {
+            padding-top: 20px !important;
+            padding-bottom: 20px !important;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Preloader -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+{{> home/header}}   <!-- partial header -->
+
+<div class="main-content">
+    {{{body}}}     <!-- nội dung riêng của từng trang -->
+</div>
+
+{{> home/footer}}   <!-- partial footer -->
+
+</body>
+</html>
+<!-- Js Plugins -->
+<script src="/js/jquery-3.3.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/player.js"></script>
+<script src="/js/jquery.nice-select.min.js"></script>
+<script src="/js/mixitup.min.js"></script>
+<script src="/js/jquery.slicknav.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/main.js"></script>

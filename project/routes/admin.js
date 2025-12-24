@@ -112,6 +112,7 @@ router.post('/movies/create', async (req, res) => {
         });
 
         await newMovie.save();
+        req.flash('success_message', `Đã thêm phim "${newMovie.title}" thành công`);
         res.redirect('/admin/movies');
     } catch (error) {
         console.error('Error creating movie:', error);
@@ -158,6 +159,7 @@ router.put('/movies/edit/:id', async (req, res) => {
         movie.imdbId = req.body.imdbId ? req.body.imdbId.trim() : '';
 
         await movie.save();
+        req.flash('success_message', `Cập nhật phim "${movie.title}" thành công`);
         res.redirect('/admin/movies');
     } catch (error) {
         console.error('Error updating movie:', error);
@@ -173,10 +175,12 @@ router.put('/movies/edit/:id', async (req, res) => {
 router.delete('/movies/:id', async (req, res) => {
     try {
         await Movie.findByIdAndDelete(req.params.id);
+        req.flash('success_message', 'Xóa phim thành công');
         res.redirect('/admin/movies');
     } catch (error) {
         console.error('Error deleting movie:', error);
-        res.redirect('/admin/movies?error=delete_failed');
+        req.flash('error_message', 'Xóa phim thất bại: ' + error.message);
+        res.redirect('/admin/movies');
     }
 });
 
@@ -312,7 +316,8 @@ router.post('/users/create', async (req, res) => {
         });
 
         await newUser.save();
-        res.redirect('/admin/users');
+        const successMessage = encodeURIComponent(`Đã thêm người dùng "${newUser.name}" thành công!`);
+        res.redirect(`/admin/users?success=${successMessage}`);
     } catch (error) {
         console.error('Error creating user:', error);
         res.render('admin/users/create', {
@@ -381,7 +386,8 @@ router.put('/users/edit/:id', async (req, res) => {
         }
 
         await user.save();
-        res.redirect('/admin/users');
+        const successMessage = encodeURIComponent(`Đã cập nhật người dùng "${user.name}" thành công!`);
+        res.redirect(`/admin/users?success=${successMessage}`);
     } catch (error) {
         console.error('Error updating user:', error);
         res.render('admin/users/edit', {
@@ -395,11 +401,20 @@ router.put('/users/edit/:id', async (req, res) => {
 // Xóa user
 router.delete('/users/:id', async (req, res) => {
     try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            const errorMessage = encodeURIComponent('Không tìm thấy người dùng cần xóa');
+            return res.redirect(`/admin/users?error=${errorMessage}`);
+        }
+        
+        const userName = user.name;
         await User.findByIdAndDelete(req.params.id);
-        res.redirect('/admin/users');
+        const successMessage = encodeURIComponent(`Đã xóa người dùng "${userName}" thành công!`);
+        res.redirect(`/admin/users?success=${successMessage}`);
     } catch (error) {
         console.error('Error deleting user:', error);
-        res.redirect('/admin/users?error=delete_failed');
+        const errorMessage = encodeURIComponent('Lỗi khi xóa người dùng: ' + error.message);
+        res.redirect(`/admin/users?error=${errorMessage}`);
     }
 });
 

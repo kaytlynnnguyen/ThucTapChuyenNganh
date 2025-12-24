@@ -21,6 +21,53 @@
     <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+    
+    <!-- CSS và JavaScript để fix footer -->
+    <style>
+        body {
+            min-height: 100vh;
+        }
+        
+        .page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1;
+        }
+        
+        .footer {
+            margin-top: auto;
+        }
+    </style>
+    
+    <script>
+        // JavaScript để đảm bảo footer luôn ở cuối
+        document.addEventListener('DOMContentLoaded', function() {
+            function fixFooter() {
+                const body = document.body;
+                const html = document.documentElement;
+                const pageWrapper = document.querySelector('.page-wrapper');
+                
+                const documentHeight = Math.max(
+                    body.scrollHeight, body.offsetHeight,
+                    html.clientHeight, html.scrollHeight, html.offsetHeight
+                );
+                
+                const windowHeight = window.innerHeight;
+                
+                if (documentHeight < windowHeight) {
+                    pageWrapper.style.minHeight = windowHeight + 'px';
+                }
+            }
+            
+            fixFooter();
+            window.addEventListener('resize', fixFooter);
+            window.addEventListener('load', fixFooter);
+        });
+    </script>
 </head>
 
 <body>
@@ -29,21 +76,18 @@
     <div class="loader"></div>
 </div>
 
-{{> home/header}}   <!-- partial header -->
-
-{{{body}}}     <!-- nội dung riêng của từng trang (index, customer, ...) -->
-
-{{> home/footer}}   <!-- partial footer -->
-<!-- Search model Begin -->
-<div class="search-model">
-    <div class="h-100 d-flex align-items-center justify-content-center">
-        <div class="search-close-switch"><i class="icon_close"></i></div>
-        <form class="search-model-form">
-            <input type="text" id="search-input" placeholder="Search here.....">
-        </form>
-    </div>
+<div class="page-wrapper">
+    {{> home/header}}   <!-- partial header -->
+    
+    <main>
+        {{{body}}}     <!-- nội dung riêng của từng trang (index, customer, ...) -->
+    </main>
+    
+    {{> home/footer}}   <!-- partial footer -->
 </div>
-<!-- Search model end -->
+
+</body>
+</html>
 <!-- Js Plugins -->
 <script src="/js/jquery-3.3.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -53,5 +97,3 @@
 <script src="/js/jquery.slicknav.js"></script>
 <script src="/js/owl.carousel.min.js"></script>
 <script src="/js/main.js"></script>
-</body>
-</html>

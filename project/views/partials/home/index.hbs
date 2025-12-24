@@ -11,7 +11,7 @@
                             {{#if user}}
                             <a href="/movies/6945594bc7462d51b1f15520/watch"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
                             {{else}}
-                            <a href="/login" style="background-color: #f39c12;"><span>Đăng nhập để xem</span> <i class="fa fa-lock"></i></a>
+                            <a href="/login" ><span>Đăng nhập để xem</span></a>
                             {{/if}}
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                             {{#if user}}
                             <a href="/movies/69455947c7462d51b1f14ca7/watch"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
                             {{else}}
-                            <a href="/login" style="background-color: #f39c12;"><span>Đăng nhập để xem</span> <i class="fa fa-lock"></i></a>
+                            <a href="/login" ><span>Đăng nhập để xem</span></a>
                             {{/if}}
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                             {{#if user}}
                             <a href="/movies/69455950c7462d51b1f15c9d/watch"><span>Watch Now</span> <i class="fa fa-angle-right"></i></a>
                             {{else}}
-                            <a href="/login" style="background-color: #f39c12;"><span>Đăng nhập để xem</span> <i class="fa fa-lock"></i></a>
+                            <a href="/login"><span>Đăng nhập để xem</span></a>
                             {{/if}}
                         </div>
                     </div>
@@ -68,10 +68,9 @@
                 {{#each trendingMovies}}
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="product__item">
-                        <div class="product__item__pic" style="position: relative; min-height: 300px; overflow: hidden; background: #f0f0f0;">
+                        <div class="product__item__pic" >
                             <img src="{{movieImage poster imgId @index}}" 
                                  alt="{{title}}" 
-                                 style="width: 100%; height: 300px; object-fit: cover; display: block;"
                                  onerror="this.src='/img/popular/popular-1.jpg'">
                         </div>
                         <div class="product__item__text">
@@ -87,7 +86,7 @@
                             </ul>
                             <h5><a href="/movies/{{_id}}">{{title}}</a></h5>
                             {{#if rating}}
-                            <p><i class="fa fa-star" style="color: gold;"></i> {{rating}}/10</p>
+                            <p class="rating"><i class="fa fa-star" style="color: gold;"></i> {{rating}}/10</p>
                             {{/if}}
                             <div class="mt-2">
                                 {{#if ../user}}
@@ -130,10 +129,9 @@
                 {{#each popularMovies}}
                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                     <div class="product__item">
-                        <div class="product__item__pic" style="position: relative; min-height: 300px; overflow: hidden; background: #f0f0f0;">
+                        <div class="product__item__pic" >
                             <img src="{{movieImage poster imgId @index}}" 
                                  alt="{{title}}" 
-                                 style="width: 100%; height: 300px; object-fit: cover; display: block;"
                                  onerror="this.src='/img/popular/popular-1.jpg'">
                         </div>
                         <div class="product__item__text">
@@ -149,13 +147,13 @@
                             </ul>
                             <h5><a href="/movies/{{_id}}">{{title}}</a></h5>
                             {{#if rating}}
-                            <p><i class="fa fa-star" style="color: gold;"></i> {{rating}}/10</p>
+                            <p class="rating"><i class="fa fa-star" style="color: gold;"></i> {{rating}}/10</p>
                             {{/if}}
                             <div class="mt-2">
                                 {{#if ../user}}
                                     {{#if _id}}
                                     <a href="/movies/{{_id}}/watch" class="btn btn-sm btn-primary">
-                                        <i class="fa fa-play"></i> Xem Trailer
+                                        <i class="fa fa-play"></i> Xem Phim
                                     </a>
                                     {{/if}}
                                 {{else}}

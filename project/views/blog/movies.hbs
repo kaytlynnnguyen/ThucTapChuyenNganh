@@ -13,8 +13,8 @@
 </div>
 <!-- Breadcrumb End -->
 
-<!-- Product Section Begin -->
-<section class="product spad">
+<!-- Movies Section Begin -->
+<section class="blog spad">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -115,7 +115,7 @@
         {{#if (gt totalPages 1)}}
         <div class="row mt-4">
             <div class="col-lg-12">
-                <div class="product__pagination" style="text-align: center;"></div>
+                <div class="product__pagination" style="text-align: center;">
                     {{#if (gt currentPage 1)}}
                     <a href="/movies?page={{math currentPage '-' 1}}{{#if search}}&search={{search}}{{/if}}{{#if genre}}&genre={{genre}}{{/if}}">
                         <i class="fa fa-angle-left"></i>
@@ -150,12 +150,6 @@
         {{/if}}
     </div>
 </section>
-<!-- Product Section End -->
+<!-- Movies Section End -->
 
-<style>
-/* Fix black space issue by overriding theme CSS */
-html, body {
-    height: auto !important;
-    min-height: auto !important;
-}
-</style>
+
