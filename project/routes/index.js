@@ -2,13 +2,24 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 const User = require('../models/User');
+const Category = require('../models/Catergory');
 const bcryptjs=require('bcryptjs')
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const movieController = require('../controllers/movieController');
 
-router.all('/*', (req, res, next) => {
-    res.locals.layout = 'home'; // layout mặc định cho admin
+router.all('/*', async (req, res, next) => {
+    res.locals.layout = 'home';
+    
+    // Thêm categories vào tất cả các trang sử dụng home layout
+    try {
+        const categories = await Category.find({ status: true }).sort({ name: 1 }).lean();
+        res.locals.categories = categories;
+    } catch (error) {
+        console.error('Error loading categories for header:', error);
+        res.locals.categories = [];
+    }
+    
     next();
 });
 
@@ -17,12 +28,11 @@ router.get('/', async function(req, res, next) {
     try {
         const Movie = require('../models/Movie');
         
-        // Lấy phim trending (có rating cao)
         const trendingMovies = await Movie.find({ 
             rating: { $gte: 7 } 
         }).sort({ rating: -1 }).limit(6).lean();
         
-        // Lấy phim popular (có poster)
+
         const popularMovies = await Movie.find({ 
             poster: { $ne: null, $ne: '' } 
         }).sort({ releaseDate: -1 }).limit(6).lean();
@@ -57,21 +67,10 @@ router.get('/', async function(req, res, next) {
 router.get('/blog_details', function(req, res, next) {
     res.render('blog/blog_details');
 });
-router.get('/blog', function(req, res, next) {
-    res.render('blog/blog');
-});
-router.get('/anime_details', function(req, res, next) {
-    res.render('blog/anime_details');
-});
-router.get('/anime_watching', function(req, res, next) {
-    res.render('blog/anime_watching');
-});
 router.get('/error', function(req, res, next) {
     res.render('blog/error');
 });
-router.get('/categories', function(req, res, next) {
-    res.render('partials/home/categories');
-});
+
 router.get('/login', function(req, res, next) {
     res.render('layouts/login');
 });
@@ -108,17 +107,17 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
     try {
         const user = await User.findById(id).exec();
-        done(null, user); // Pass the user to the done callback
+        done(null, user);
     } catch (err) {
-        done(err); // Pass the error to the done callback if an error occurred
+        done(err); 
     }
 });
 router.get('/logout', (req, res) => {
     req.logOut((err) => {
         if (err) {
-            return res.status(500).send(err); // Handle the error appropriately
+            return res.status(500).send(err); 
         }
-        res.redirect('/signup'); // Redirect after logout
+        res.redirect('/signup'); 
     });
 
 })
@@ -157,7 +156,7 @@ router.post('/signup', function(req, res, next) {
                         newUser.password = hash;
                         newUser.save().then(saveUser => {
                             req.flash('success_message', 'Successfully registered!');
-                            res.redirect('/login');//or /login
+                            res.redirect('/login');
                         });
                     })
                 })
@@ -168,48 +167,4 @@ router.post('/signup', function(req, res, next) {
         });
     }
 });
-router.get('/customer', function(req, res, next) {
-    res.render('blog/customer');
-});
-router.get('/test', function(req, res, next) {
-    res.render('blog/test');
-});
-
-// Route test movies đơn giản
-router.get('/test-movies', async function(req, res, next) {
-    try {
-        const Movie = require('../models/Movie');
-        const movies = await Movie.find({ 
-            poster: { $ne: null, $ne: '' } 
-        }).limit(5).lean();
-        
-        console.log('Found movies:', movies.length);
-        
-        // Trả về HTML đơn giản
-        let html = `
-        <html>
-        <head><title>Test Movies</title></head>
-        <body>
-            <h1>Test Movies (${movies.length} found)</h1>
-        `;
-        
-        movies.forEach((movie, index) => {
-            html += `
-            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-                <h3>${movie.title}</h3>
-                <p>Poster: ${movie.poster || 'None'}</p>
-                <p>ImgId: ${movie.imgId || 'None'}</p>
-                ${movie.poster ? `<img src="${movie.poster}" style="max-width: 200px;" onerror="this.style.border='2px solid red'">` : ''}
-            </div>
-            `;
-        });
-        
-        html += '</body></html>';
-        res.send(html);
-    } catch (error) {
-        console.error('Error:', error);
-        res.send('Error: ' + error.message);
-    }
-});
-
 module.exports = router;

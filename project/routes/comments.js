@@ -5,9 +5,9 @@ var router = express.Router();
 // Middleware kiểm tra admin
 function requireAdmin(req, res, next) {
     if (req.isAuthenticated && req.isAuthenticated()) {
-        return next(); // Proceed if authenticated
+        return next(); 
     } else {
-        res.redirect('/login'); // Redirect to login if authentication fails
+        res.redirect('/login'); 
     }
 }
 
@@ -16,7 +16,7 @@ router.all('/*', function(req, res, next) {
     next();
 });
 
-// GET /admin/comments - Danh sách comments
+// danh sach comment
 router.get('/', requireAdmin, async function(req, res) {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -64,7 +64,7 @@ router.get('/', requireAdmin, async function(req, res) {
     }
 });
 
-// POST /admin/comments/:id/approve - Duyệt comment
+
 router.post('/:id/approve', requireAdmin, async function(req, res) {
     try {
         await Comment.findByIdAndUpdate(req.params.id, { status: 'approved' });
@@ -77,7 +77,7 @@ router.post('/:id/approve', requireAdmin, async function(req, res) {
     }
 });
 
-// POST /admin/comments/:id/reject - Từ chối comment
+
 router.post('/:id/reject', requireAdmin, async function(req, res) {
     try {
         await Comment.findByIdAndUpdate(req.params.id, { status: 'rejected' });
@@ -90,7 +90,7 @@ router.post('/:id/reject', requireAdmin, async function(req, res) {
     }
 });
 
-// DELETE /admin/comments/:id - Xóa comment
+
 router.delete('/:id', requireAdmin, async function(req, res) {
     try {
         await Comment.findByIdAndDelete(req.params.id);

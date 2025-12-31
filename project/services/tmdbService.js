@@ -1,12 +1,12 @@
 const axios = require('axios');
 
-// Bạn cần thay thế bằng API key thật từ https://www.themoviedb.org/settings/api
+
 const TMDB_KEY = process.env.TMDB_API_KEY || 'YOUR_REAL_TMDB_API_KEY_HERE';
 
 async function getPosterByImdbId(imdbId) {
     try {
         if (!TMDB_KEY || TMDB_KEY === 'YOUR_REAL_TMDB_API_KEY_HERE') {
-            console.warn('⚠️  TMDB API key chưa được cấu hình!');
+            console.warn('TMDB API key chưa được cấu hình!');
             return null;
         }
 
@@ -31,14 +31,14 @@ async function getPosterByImdbId(imdbId) {
         // 2️⃣ tmdbId → poster
         if (movie.poster_path) {
             const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
-            console.log(`✅ Tìm thấy poster cho ${imdbId}: ${posterUrl}`);
+            console.log(`Tìm thấy poster cho ${imdbId}: ${posterUrl}`);
             return posterUrl;
         } else {
             console.log(`Phim ${imdbId} không có poster`);
             return null;
         }
     } catch (err) {
-        console.error(`❌ TMDB API error cho ${imdbId}:`, err.message);
+        console.error(`TMDB API error cho ${imdbId}:`, err.message);
         return null;
     }
 }

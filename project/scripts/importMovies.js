@@ -34,14 +34,14 @@ function importMovies() {
     }
 
     if (!csvFile) {
-        console.error('❌ Không tìm thấy file CSV!');
+        console.error('Không tìm thấy file CSV!');
         console.log('\nVui lòng đặt file CSV vào một trong các vị trí sau:');
         csvFiles.forEach(file => console.log(`  - ${file}`));
         process.exit(1);
     }
 
-    console.log(`✅ Đã tìm thấy file: ${csvFile}`);
-    console.log('📖 Đang đọc file CSV...\n');
+    console.log(`Đã tìm thấy file: ${csvFile}`);
+    console.log('Đang đọc file CSV...\n');
 
     const movies = [];
     let rowCount = 0;
@@ -51,8 +51,6 @@ function importMovies() {
         .on('data', (row) => {
             rowCount++;
             
-            // Xử lý dữ liệu từ CSV TMDB/Kaggle
-            // Hỗ trợ nhiều định dạng tên cột khác nhau
             const movie = {
                 title: row.title || row.Title || row.name || row.Name || row.original_title || '',
                 overview: row.overview || row.Overview || row.plot || row.Plot || row.description || '',
@@ -69,11 +67,11 @@ function importMovies() {
             }
         })
         .on('end', async () => {
-            console.log(`📊 Đã đọc ${rowCount} dòng`);
-            console.log(`✅ Có ${movies.length} phim hợp lệ để import\n`);
+            console.log(`Đã đọc ${rowCount} dòng`);
+            console.log(`Có ${movies.length} phim hợp lệ để import\n`);
             
             if (movies.length === 0) {
-                console.log('⚠️  Không có dữ liệu phim nào để import!');
+                console.log('Không có dữ liệu phim nào để import!');
                 mongoose.connection.close();
                 process.exit(0);
             }
@@ -83,7 +81,7 @@ function importMovies() {
                 let skipped = 0;
                 let errors = 0;
 
-                console.log('💾 Đang import vào database...\n');
+                console.log('Đang import vào database...\n');
 
                 for (let i = 0; i < movies.length; i++) {
                     const movieData = movies[i];
@@ -101,14 +99,14 @@ function importMovies() {
                             
                             // Hiển thị tiến trình mỗi 100 phim
                             if ((i + 1) % 100 === 0) {
-                                process.stdout.write(`\r⏳ Đã xử lý: ${i + 1}/${movies.length} phim...`);
+                                process.stdout.write(`\rĐã xử lý: ${i + 1}/${movies.length} phim...`);
                             }
                         } else {
                             skipped++;
                         }
                     } catch (error) {
                         errors++;
-                        console.error(`\n❌ Lỗi khi import phim "${movieData.title}":`, error.message);
+                        console.error(`\nLỗi khi import phim "${movieData.title}":`, error.message);
                     }
                 }
 
@@ -116,26 +114,26 @@ function importMovies() {
                 console.log('═══════════════════════════════════════');
                 console.log('✅ HOÀN THÀNH IMPORT!');
                 console.log('═══════════════════════════════════════');
-                console.log(`📥 Đã import: ${imported} phim mới`);
-                console.log(`⏭️  Đã bỏ qua (trùng lặp): ${skipped} phim`);
+                console.log(`Đã import: ${imported} phim mới`);
+                console.log(`⏭ Đã bỏ qua (trùng lặp): ${skipped} phim`);
                 if (errors > 0) {
-                    console.log(`❌ Lỗi: ${errors} phim`);
+                    console.log(`Lỗi: ${errors} phim`);
                 }
                 
                 const totalMovies = await Movie.countDocuments();
-                console.log(`📊 Tổng số phim trong database: ${totalMovies}`);
+                console.log(`Tổng số phim trong database: ${totalMovies}`);
                 console.log('═══════════════════════════════════════\n');
                 
                 mongoose.connection.close();
                 process.exit(0);
             } catch (error) {
-                console.error('\n❌ Lỗi khi import:', error);
+                console.error('\nLỗi khi import:', error);
                 mongoose.connection.close();
                 process.exit(1);
             }
         })
         .on('error', (error) => {
-            console.error('❌ Lỗi khi đọc file CSV:', error);
+            console.error('Lỗi khi đọc file CSV:', error);
             mongoose.connection.close();
             process.exit(1);
         });

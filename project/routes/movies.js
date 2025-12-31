@@ -2,12 +2,13 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const TMDB_API_KEY = 'c05481df7e07f877fc270caf7e48f9c0'; // ← thay bằng key của Hân
+//const TMDB_API_KEY = 'c05481df7e07f877fc270caf7e48f9c0'; 
 
 var express = require('express');
 var router = express.Router();
 const Movie = require('../models/Movie');
 const Comment = require('../models/Comment');
+const Category = require('../models/Catergory');
 const youtubeService = require('../services/youtubeService');
 
 // Middleware kiểm tra đăng nhập
@@ -21,11 +22,21 @@ function requireLogin(req, res, next) {
     }
 }
 
-router.all('/*', (req, res, next) => {
+router.all('/*', async (req, res, next) => {
     res.locals.layout = 'home';
+    
+    // Thêm categories vào tất cả các trang sử dụng home layout
+    try {
+        const categories = await Category.find({ status: true }).sort({ name: 1 }).lean();
+        res.locals.categories = categories;
+    } catch (error) {
+        console.error('Error loading categories for home:', error);
+        res.locals.categories = [];
+    }
+    
     next();
 });
-//thêm này vào
+
 async function getPosterFromTMDB(imdbId) {
     if (!imdbId) return null;
 
@@ -113,20 +124,9 @@ router.get('/', async function(req, res, next) {
         const totalMovies = await Movie.countDocuments(query);
         const totalPages = Math.ceil(totalMovies / limit);
 
-        // Lấy danh sách genres để hiển thị filter
-        const allGenres = await Movie.distinct('genres');
-        const genres = allGenres
-            .filter(g => g && g.trim() !== '')
-            .map(g => {
-                // Nếu genres có dạng "Action, Drama, Comedy", tách ra
-                if (g.includes(',')) {
-                    return g.split(',').map(gg => gg.trim());
-                }
-                return g.trim();
-            })
-            .flat()
-            .filter((g, index, self) => self.indexOf(g) === index) // Loại bỏ trùng lặp
-            .sort();
+        // Lấy danh sách categories từ admin để hiển thị filter
+        const categories = await Category.find({ status: true }).sort({ name: 1 }).lean();
+        const genres = categories.map(cat => cat.name);
 
         res.render('blog/movies', {
             layout: 'movies', // Sử dụng layout riêng
@@ -194,8 +194,8 @@ router.post('/:id/comment', requireLogin, async function(req, res, next) {
     }
 });
 
-// Chi tiết phim - Yêu cầu đăng nhập - comment
-router.get('/:id', requireLogin, async function(req, res, next) {
+// Chi tiết phim - Hiển thị chi tiết phim (không yêu cầu đăng nhập)
+router.get('/:id', async function(req, res, next) {
     try {
         // Kiểm tra ID có hợp lệ không (dùng mongoose validation)
         const mongoose = require('mongoose');
@@ -246,11 +246,22 @@ router.get('/:id', requireLogin, async function(req, res, next) {
         const movieObj = movie.toObject ? movie.toObject() : movie;
         movieObj._id = movieObj._id.toString();
 
+        // Chuẩn hoá `genres` thành mảng đơn giản để template có thể hiển thị từng thể loại riêng
+        if (movieObj.genres && typeof movieObj.genres === 'string') {
+            movieObj.genres = movieObj.genres.split(/[|,;]+/).map(g => g.trim()).filter(Boolean);
+        } else if (!movieObj.genres) {
+            movieObj.genres = [];
+        }
+        //cap nhat o home
+        const categories = await Category.find({ status: true }).sort({ name: 1 }).lean();
+        const genres = categories.map(cat => cat.name);
+
         res.render('blog/movie_details', {
             title: movie.title || 'Chi tiết phim',
             movie: movieObj,
             comments: comments,
-            relatedMovies: relatedMovies
+            relatedMovies: relatedMovies,
+            genres: genres
         });
     } catch (error) {
         console.error('Lỗi khi lấy chi tiết phim:', error);

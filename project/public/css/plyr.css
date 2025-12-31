@@ -24,9 +24,8 @@
     flex-direction: column;
     align-items: center;
 
-    /* 🚫 KHÔNG CHO CHIẾM CHIỀU CAO TRANG */
-    height: auto !important;
-    min-height: 0 !important;
+    height: auto;
+    min-height: 0;
 
     max-width: 100%;
     position: relative;
@@ -39,14 +38,14 @@
 .plyr audio {
     display: block;
     width: 100%;
-    height: auto !important; /* ✅ FIX */
+    height: auto;
 }
 
 /* ===== VIDEO WRAPPER (16:9) ===== */
 .plyr__video-wrapper {
     position: relative;
     width: 100%;
-    height: auto !important; /* ✅ FIX */
+    height: auto;
     overflow: hidden;
     background: #000;
 }

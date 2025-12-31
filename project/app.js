@@ -93,6 +93,16 @@ app.engine('hbs',engine({
             if (!date) return '';
             return new Date(date).toLocaleDateString('vi-VN');
         }
+        ,
+        // Helper urlencode for safe URL params
+        urlencode: function(str) {
+            if (str === undefined || str === null) return '';
+            try {
+                return encodeURIComponent(String(str));
+            } catch (e) {
+                return '';
+            }
+        }
     }
 }));
 
@@ -109,7 +119,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// You might also need custom middleware to make flash messages available in templates
 app.use((req, res, next) => {
     res.locals.user = req.user ? req.user.toObject() : null;
     res.locals.success_message = req.flash('success_message');
@@ -119,7 +128,7 @@ app.use((req, res, next) => {
     next();
 });
 
-//load route
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 var userRouter = require('./routes/users');
@@ -140,20 +149,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Fix CSP issues with JavaScript libraries - DISABLED
-// app.use((req, res, next) => {
-//     res.setHeader(
-//         'Content-Security-Policy',
-//         "default-src 'self'; " +
-//         "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://fonts.googleapis.com https://www.youtube.com https://www.google.com; " +
-//         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-//         "font-src 'self' https://fonts.gstatic.com; " +
-//         "img-src 'self' data: https: http:; " +
-//         "frame-src 'self' https://www.youtube.com; " +
-//         "connect-src 'self';"
-//     );
-//     next();
-// });
+
 
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);

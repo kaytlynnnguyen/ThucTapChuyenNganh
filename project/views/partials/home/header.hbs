@@ -3,18 +3,22 @@
         <div class="row align-items-center">
             <div class="col-lg-2">
                 <div class="header__logo">
+                        <a href="/" class="logo-circle">
+                            <img src="/img/movielogo.png" alt="VieOff Logo">
+                        </a>
+                    </div>
+                {{!-- <div class="header__logo">
                     <a href="/">
                         <span class="logo-text">
                             <span class="logo-white">Vie</span><span class="logo-blue">Off</span>
                         </span>
                     </a>
-                </div>
+                </div> --}}
             </div>
             <div class="col-lg-8">
                 <nav class="header__menu mobile-menu">
                     <ul class="d-flex justify-content-center gap-4">
                         <li class="active"><a href="/">Homepage</a></li>
-                        <li><a href="/blog_details">Blog Details</a></li>
                         <li><a href="/movies">Movies</a></li>
                         {{#if user}}
                             <li><a href="/logout" >Logout</a></li>

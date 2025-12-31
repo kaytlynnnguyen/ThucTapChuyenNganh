@@ -11,7 +11,7 @@ mongoose.connect('mongodb://127.0.0.1/node')
         importGenres();
     })
     .catch(err => {
-        console.error("❌ Error connecting to MongoDB:", err);
+        console.error("Error connecting to MongoDB:", err);
         process.exit(1);
     });
 
@@ -43,17 +43,17 @@ async function importGenres() {
                 }
                 
                 if (processedMovies % 1000 === 0) {
-                    console.log(`📊 Đã xử lý ${processedMovies} phim, tìm thấy ${genresSet.size} thể loại`);
+                    console.log(`Đã xử lý ${processedMovies} phim, tìm thấy ${genresSet.size} thể loại`);
                 }
             })
             .on('end', async () => {
-                console.log(`\n✅ Hoàn thành đọc CSV: ${processedMovies} phim`);
-                console.log(`🎭 Tổng cộng tìm thấy ${genresSet.size} thể loại khác nhau`);
+                console.log(`\nHoàn thành đọc CSV: ${processedMovies} phim`);
+                console.log(`Tổng cộng tìm thấy ${genresSet.size} thể loại khác nhau`);
                 
                 // Chuyển Set thành Array và sắp xếp
                 const genresArray = Array.from(genresSet).sort();
                 
-                console.log("\n📝 Danh sách thể loại:");
+                console.log("\n Danh sách thể loại:");
                 genresArray.forEach((genre, index) => {
                     console.log(`${index + 1}. ${genre}`);
                 });
@@ -62,12 +62,12 @@ async function importGenres() {
                 await importToMongoDB(genresArray);
             })
             .on('error', (error) => {
-                console.error("❌ Lỗi khi đọc CSV:", error);
+                console.error("Lỗi khi đọc CSV:", error);
                 process.exit(1);
             });
             
     } catch (error) {
-        console.error("❌ Lỗi:", error);
+        console.error("Lỗi:", error);
         process.exit(1);
     }
 }
@@ -100,35 +100,35 @@ async function importToMongoDB(genresArray) {
                     imported++;
                     
                     if (imported % 5 === 0) {
-                        console.log(`📥 Đã import ${imported}/${genresArray.length} thể loại...`);
+                        console.log(`Dã import ${imported}/${genresArray.length} thể loại...`);
                     }
                 } else {
                     skipped++;
                 }
             } catch (error) {
-                console.error(`❌ Lỗi khi import "${genreName}":`, error.message);
+                console.error(`Lỗi khi import "${genreName}":`, error.message);
             }
         }
         
-        console.log(`\n🎉 Hoàn thành import!`);
-        console.log(`✅ Đã import: ${imported} thể loại`);
-        console.log(`⏭️  Đã bỏ qua: ${skipped} thể loại (đã tồn tại)`);
-        console.log(`📊 Tổng cộng: ${imported + skipped} thể loại`);
+        console.log(`\nHoàn thành import!`);
+        console.log(`Đã import: ${imported} thể loại`);
+        console.log(`Đã bỏ qua: ${skipped} thể loại (đã tồn tại)`);
+        console.log(`Tổng cộng: ${imported + skipped} thể loại`);
         
         // Hiển thị một số thể loại đã import
         const sampleCategories = await Category.find().limit(10);
-        console.log("\n📋 Một số thể loại đã import:");
+        console.log("\nMột số thể loại đã import:");
         sampleCategories.forEach((cat, index) => {
             console.log(`${index + 1}. ${cat.name} (${cat.status ? 'Active' : 'Inactive'})`);
         });
         
-        console.log("\n🌐 Bây giờ bạn có thể truy cập: http://localhost:3000/admin/category");
+        console.log("\nBây giờ bạn có thể truy cập: http://localhost:3000/admin/category");
         
         mongoose.connection.close();
         process.exit(0);
         
     } catch (error) {
-        console.error("❌ Lỗi khi import vào MongoDB:", error);
+        console.error("Lỗi khi import vào MongoDB:", error);
         process.exit(1);
     }
 }
